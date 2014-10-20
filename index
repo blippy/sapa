@@ -1,0 +1,195 @@
+
+;;;-*- Mode: LISP; Package: :CL-USER; Syntax: COMMON-LISP -*-
+;-------------------------------------------------------------------------------
+;-------------------------------------------------------------------------------
+;
+;  index for the sapaclisp contribution to StatLib, Version 1.0, 3 June 1993
+;
+;  sapaclisp is a collection of Common Lisp functions that can be used
+;  to carry out many of the computations described in the book
+;     "Spectral Analysis for Physical Applications: Multitaper and
+;      Conventional Univariate Techniques",
+;     by Donald B. Percival and Andrew T. Walden,
+;     Cambridge University Press, Cambridge, England, 1993
+;  (we refer to this book later on as "the SAPA book").
+;  Questions concerning these Lisp functions can be addressed to
+;  Don Percival via electronic mail at the Internet address
+;             dbp@apl.washington.edu
+;  or via traditional mail at the address
+;             Donald B. Percival
+;             Applied Physics Laboratory
+;             HN-10
+;             University of Washington
+;             Seattle, WA  98195
+;  The SAPA book uses a number of time series as examples
+;  of various spectral analysis techniques.  The most important of
+;  these series are also available from StatLib by sending the command
+;             send sapa from datasets
+;  to the Internet address
+;             statlib@lib.stat.cmu.edu
+; 
+;  Version 1.0 of the sapaclisp contribution consists of this index
+;  and the following 16 files:
+;   [ 1]  sapa-package
+;   [ 2]  hacks
+;   [ 3]  utilities
+;   [ 4]  basic-math
+;   [ 5]  matrix
+;   [ 6]  basic-statistics
+;   [ 7]  dft-and-fft
+;   [ 8]  tapers
+;   [ 9]  filtering
+;   [10]  random
+;   [11]  acvs
+;   [12]  parametric
+;   [13]  nonparametric
+;   [14]  multitaper
+;   [15]  harmonic
+;   [16]  examples
+;  All 16 files can be obtaining by sending the command
+;             send everything from sapaclisp
+;  to the Internet address
+;             statlib@lib.stat.cmu.edu
+;  Individual files can be obtained by sending a command such as
+;             send dft-and-fft from sapaclisp
+;  to the same address.
+;
+;  Here is a brief description of the contents of each file:
+;   [ 1]  sapa-package contains Lisp forms needed to create
+;         the package SAPA (packages are mysterious and tricky
+;         creatures in Common Lisp that serve a noble purpose,
+;         namely, to make sure that different collections of
+;         Lisp functions can gracefully live together).  All
+;         of the Lisp functions in the sapaclisp contribution
+;         live in the SAPA package.  You should compile and load
+;         this file before trying to do ANYTHING from within Lisp
+;         with the other files (including viewing them with a
+;         Lisp-oriented text editor!).
+;   [ 2]  hacks at present patches up faulty definitions for map-into
+;         in Allegro Common Lisp and in the Genera 8.1 version of Common Lisp
+;         (if you are using Macintosh Common Lisp, you can ignore this file).
+;   [ 3]  utilities contains a collection of utility functions
+;         that are used extensively throughout SAPA.  These are mostly
+;         functions for manipulating various sequences of data, but
+;         there are also functions for converting back and from
+;         decibels, a Lisp implementation of the Fortran sign function, etc.
+;   [ 4]  basic-math contains functions for supporting certain
+;         basic mathematical operations such as computing the log
+;         of the gamma function, manipulating polynomials, root finding
+;         and simple numerical integration.
+;   [ 5]  matrix contains functions for manipulating matrices, including
+;         the Cholesky and modified Gram-Schmidt (i.e., Q-R) decompositions.
+;   [ 6]  basic-statistics contains functions to carry out basic
+;         statistical operations, such as sample means and variances,
+;         sample medians, computation of quantiles from various distributions,
+;         linear least squares, etc.
+;   [ 7]  dft-and-fft contains functions for computing the discrete Fourier
+;         transform of a vector of numbers via a fast Fourier transform
+;         algorithm or a chirp transform algorithm.
+;   [ 8]  tapers contains functions for computing the cosine and dpss
+;         data tapers and applying them to a time series.
+;   [ 9]  filtering contains functions that approximate ideal low-pass,
+;         high-pass and band-pass filters using techniques outlined
+;         in Chapter 5 of the SAPA book.  It also has functions for
+;         some simple smoothers.
+;   [10]  random contains functions for generating realizations of
+;         various stationary processes.
+;   [11]  acvs contains functions for computing the sample autocovariance
+;         sequence and sample variogram for a time series.
+;   [12]  parametric contains functions for computing autoregressive
+;         spectral estimates using a variety of techniques, including
+;         the Yule-Walker method, Burg's algorithm, forward least squares
+;         and forward/backward least squares (these are discussed in
+;         Chapter 9 of the SAPA book).
+;   [13]  nonparametric contains functions for computing nonparametric
+;         spectral estimates, including the periodogram, direct spectral
+;         estimates, lag window spectral estimates and WOSA spectral
+;         estimates.  There are also functions for computing the sample
+;         cepstrum, the time series bandwidth and the cumulative periodogram
+;         test statistic for white noise (all of these are discussed
+;         in Chapter 6 of the SAPA book).
+;   [14]  multitaper contains functions for computing the orthonormal
+;         dpss data tapers and both the simple and adaptive multitaper
+;         spectral estimates (discussed in Chapters 7 and 8 of the SAPA book).
+;   [15]  harmonic contains functions for computing the cosine and
+          sine component of the periodogram and Fisher's g statistic
+          (discussed in Chapter 10 of the SAPA book).
+;   [16]  examples contains just that: some examples of how to use
+;         the functions in SAPA to reproduce some of the results in
+;         the SAPA book.
+;  All exported functions in SAPA have a documentation line that tells
+;  how to use them.  In addition, almost all functions have a brief
+;  example of their use immediately following the definition of the
+;  the function.  You can repeat these examples by evaluating the
+;  appropriate Lisp forms.  Note: some of these Lisp forms return
+;  a short vector, the contents of which can be examined easily
+;  by setting the Common Lisp variable *print-array* to t prior to
+;  evaluating the Lisp form (see page 565 of the second edition of
+;  "Common Lisp: The Language" by Guy Steele, Digital Press, 1990 --
+;  we refer to this book later on as "Steele2").
+;
+;  Here are the steps to take to prepare the SAPA files for use.
+;   [ 1]  Retrieve all 16 files from StatLib, and place them on your
+;         computer in 16 individual files.  As an example, let's
+;         assume that the files are named
+;              sapa-package.lisp
+;              hacks.lisp
+;              utilities.lisp
+;                  ...
+;              harmonic.lisp
+;              examples.lisp
+;         The first line in each file should have some gunk on it
+;         concerning Mode, Package and Syntax.
+;   [ 2]  Bring up Lisp on your computer.
+;   [ 3]  Compile sapa-package.lisp, and then load it into your
+;         Lisp world.  Here are examples of two Lisp forms that
+;         will do this if you evaluate them:
+;              (compile-file "sapa-package.lisp")
+;              (load "sapa-package.fasl")
+;         Here the function compile-file compiles the file sapa-package.lisp,
+;         and the results of the compilation are placed in sapa-package.fasl.
+;         The compiled version is then loaded into the Lisp world using
+;         the load function.  Note that the ".lisp" and ".fasl" extensions
+;         in this example may need to be changed to match the naming
+;         conventions for source files and compiled binary files
+;         in Lisp systems other than Macintosh Common Lisp 2.0.
+;   [ 4]  Compile and load all the remaining files EXCEPT examples.lisp
+;         in the order in which they are listed above (you can actually
+;         compile and load these remaining files in any order if you
+;         are willing to put up with snippy comments from certain compilers
+;         about undefined functions).
+;   [ 5]  To use the functions in SAPA, you must evaluate the following
+;         Lisp form
+;              (use-package :SAPA)
+;         from within whatever package you plan to use the functions in the
+;         SAPA package (usually this will be the package CL-USER).
+;         This Lisp form is the second form in the file examples.lisp,
+;         so you can just evaluate it there (that file does things in the
+;         package CL-USER).  You can evaluate various forms given
+;         in examples.lisp to learn how to use some of the SAPA functions.
+;
+;  For the record, the functions in the SAPA package have been tested
+;  successfully in the following versions of Common Lisp:
+;   [a]  Macintosh Common Lisp 2.0p2
+;   [b]  Symbolics Genera 8.1.1 on a Symbolics MacIvory model 3
+;   [c]  Allegro Common Lisp running under SunOS Release 4.1.2
+;
+;
+;  Finally, here is some legal nonsense, shamelessly stolen from someone else
+;  and placed here in an attempt to fend off lawyers (I don't know what it
+;  means; I don't care what it means; I wasn't in my right mind when I did
+;  all of this; I've NEVER been in my right mind; I'm not responsible
+;  for anything I've ever done; the Devil made me do it; ... ):
+;
+;  SAPA, Version 1.0; Copyright 1993, Donald B. Percival, All Rights Reserved
+;
+;  Use and copying of this software and preparation of derivative works
+;  based upon this software are permitted.  Any distribution of this
+;  software or derivative works must comply with all applicable United
+;  States export control laws.
+; 
+;  This software is made available AS IS, and no warranty -- about the
+;  software, its performance, or its conformity to any
+;  specification -- is given or implied. 
+;-------------------------------------------------------------------------------
+;-------------------------------------------------------------------------------
